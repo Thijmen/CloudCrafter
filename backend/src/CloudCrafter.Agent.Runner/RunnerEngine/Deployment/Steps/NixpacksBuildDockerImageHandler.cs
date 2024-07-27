@@ -5,6 +5,7 @@ using CloudCrafter.Agent.Models.Exceptions;
 using CloudCrafter.Agent.Models.Recipe;
 using CloudCrafter.Agent.Models.Runner;
 using CloudCrafter.Agent.Runner.Cli.Helpers;
+using CloudCrafter.Agent.Runner.Cli.Helpers.Abstraction;
 using CloudCrafter.Agent.Runner.DeploymentLogPump;
 
 namespace CloudCrafter.Agent.Runner.RunnerEngine.Deployment.Steps;
@@ -31,8 +32,13 @@ public class NixpacksBuildDockerImageHandler(IMessagePump pump, INixpacksHelper 
 
         var image = $"{parameters.Image}:{parameters.Tag}";
 
-        var result = await nixpacksHelper.BuildDockerImage(planPath, workDir, image,
-            parameters.DisableCache.GetValueOrDefault());
+        var result = await nixpacksHelper.BuildDockerImage(new()
+        {
+            PlanPath = planPath,
+            WorkDir = workDir,
+            ImageName = image,
+            DisableCache = parameters.DisableCache.GetValueOrDefault()
+        });
 
 
         _logger.LogInfo($"Successfully built Docker image: {image}");

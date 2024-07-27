@@ -1,0 +1,8 @@
+﻿services:
+  frontend:
+    image: nginx:latest
+    labels:
+      cloudcrafter.application: ddf9e4a2-3358-442d-8781-30daf32fd59d
+      traefik.enable: true
+      traefik.http.routers.frontend.rule: Host(`example.com`)
+      traefik.http.routers.frontend.entrypoints: web

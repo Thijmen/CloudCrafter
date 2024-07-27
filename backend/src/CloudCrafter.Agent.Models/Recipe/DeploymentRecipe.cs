@@ -3,9 +3,15 @@
 public class DeploymentRecipe
 {
     public required string Name { get; init; }
+    public required DeploymentRecipeApplicationInfo Application { get; init; }
     public DeploymentRecipeDockerComposeOptions? DockerComposeOptions { get; set; }
     public required DeploymentRecipeDestination Destination { get; init; }
     public required DeploymentBuildOptions BuildOptions { get; init; }
+}
+
+public class DeploymentRecipeApplicationInfo
+{
+    public required Guid Id { get; init; }
 }
 
 public class DeploymentRecipeDockerComposeOptions
@@ -42,5 +48,6 @@ public enum DeploymentBuildStepType
     NixpacksBuildDockerImage,
     DockerComposeWriteToFileSystem,
     DockerComposeUp,
+    DockerValidateNetworksExists,
     ContainerHealthCheck
 }

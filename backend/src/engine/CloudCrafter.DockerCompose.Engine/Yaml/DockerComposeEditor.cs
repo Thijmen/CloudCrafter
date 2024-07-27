@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using CloudCrafter.DockerCompose.Engine.Exceptions;
 using CloudCrafter.DockerCompose.Engine.Validator;
+using CloudCrafter.DockerCompose.Shared.Labels;
 using YamlDotNet.RepresentationModel;
 
 namespace CloudCrafter.DockerCompose.Engine.Yaml;
@@ -167,6 +168,11 @@ public class DockerComposeEditor
             return SetKeyValue("name", networkName);
         }
 
+        public NetworkEditor SetIsExternalNetwork()
+        {
+            return SetKeyValue("external", "true");
+        }
+
         public string GetNetworkName()
         {
             return NetworkName;
@@ -194,6 +200,18 @@ public class DockerComposeEditor
 
             var labelsNode = (YamlMappingNode)serviceNode["labels"];
             labelsNode.Add(key, new YamlScalarNode(value));
+            return this;
+        }
+
+        public ServiceEditor AddLabels(DockerComposeLabelService labelService)
+        {
+            var labels = labelService.ToDictionary();
+
+            foreach (var label in labels)
+            {
+                AddLabel(label.Key, label.Value);
+            }
+
             return this;
         }
 

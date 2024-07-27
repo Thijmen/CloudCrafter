@@ -1,6 +1,7 @@
 ﻿using CloudCrafter.DockerCompose.Engine.Yaml;
 using CloudCrafter.Shared.Utils.Http;
 using Docker.DotNet;
+using Docker.DotNet.Models;
 
 namespace CloudCrafter.Agent.Console.IntegrationTests;
 
@@ -20,6 +21,20 @@ public static class Helpers
             .InspectImageAsync(image);
 
         result.Should().NotBeNull();
+    }
+
+    public static async Task EnsureNetworkExists(string networkName)
+    {
+        var networks = await _client.Networks.ListNetworksAsync();
+        var network = networks.FirstOrDefault(x => x.Name == networkName);
+
+        if (network == null)
+        {
+            await _client.Networks.CreateNetworkAsync(new NetworksCreateParameters
+            {
+                Name = networkName
+            });
+        }
     }
 
 

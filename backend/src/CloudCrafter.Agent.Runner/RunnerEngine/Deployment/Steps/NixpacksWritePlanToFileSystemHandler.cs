@@ -5,6 +5,7 @@ using CloudCrafter.Agent.Models.Exceptions;
 using CloudCrafter.Agent.Models.Recipe;
 using CloudCrafter.Agent.Models.Runner;
 using CloudCrafter.Agent.Runner.Cli.Helpers;
+using CloudCrafter.Agent.Runner.Cli.Helpers.Abstraction;
 using CloudCrafter.Agent.Runner.DeploymentLogPump;
 
 namespace CloudCrafter.Agent.Runner.RunnerEngine.Deployment.Steps;

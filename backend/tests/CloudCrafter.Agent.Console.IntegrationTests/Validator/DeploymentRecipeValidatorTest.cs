@@ -23,6 +23,10 @@ public class DeploymentRecipeValidatorTest
         var recipe = new DeploymentRecipe
         {
             Name = "My Application",
+            Application = new()
+            {
+                Id = Guid.NewGuid()
+            },
             Destination =
                 new DeploymentRecipeDestination { RootDirectory = "/tmp/cloudcrafter/" },
             BuildOptions = new DeploymentBuildOptions
@@ -57,6 +61,10 @@ public class DeploymentRecipeValidatorTest
         var recipe = new DeploymentRecipe
         {
             Name = "My Application",
+            Application = new()
+            {
+                Id = Guid.NewGuid()
+            },
             Destination =
                 new DeploymentRecipeDestination { RootDirectory = "/tmp/cloudcrafter/" },
             BuildOptions = new DeploymentBuildOptions { Steps = new List<DeploymentBuildStep>() }
@@ -75,6 +83,10 @@ public class DeploymentRecipeValidatorTest
         var recipe = new DeploymentRecipe
         {
             Name = "My Application",
+            Application = new()
+            {
+                Id = Guid.NewGuid()
+            },
             Destination =
                 new DeploymentRecipeDestination { RootDirectory = "/tmp/cloudcrafter/" },
             DockerComposeOptions = new() { },

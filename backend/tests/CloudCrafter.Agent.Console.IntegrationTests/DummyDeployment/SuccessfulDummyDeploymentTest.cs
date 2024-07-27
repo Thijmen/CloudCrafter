@@ -1,5 +1,5 @@
-﻿using CloudCrafter.Agent.Console.Commands;
-using CloudCrafter.Agent.Models.Recipe;
+﻿using CloudCrafter.Agent.Models.Recipe;
+using CloudCrafter.Agent.Runner.Commands;
 using CloudCrafter.Agent.Runner.RunnerEngine.Deployment;
 using CloudCrafter.Shared.Utils;
 using MediatR;
@@ -20,9 +20,11 @@ public class SuccessfulDummyDeploymentTest
         var builder = Program.CreateHostBuilder([]);
         var host = builder.Build();
 
-        Log.Logger =  new LoggerConfiguration().WriteTo.NUnitOutput().CreateLogger();
+        Log.Logger = new LoggerConfiguration().WriteTo.NUnitOutput().CreateLogger();
         var mediator = host.Services.GetRequiredService<IMediator>();
-        _recipe = await mediator.Send(new GetDummyDeployment.Query("custom-image", "testing"));
+
+        var applicationId = Guid.Parse("7547f1d4-0bbc-49f5-8a93-2f1b20fe1307");
+        _recipe = await mediator.Send(new GetDummyDeployment.Query("custom-image", "testing", applicationId));
 
         _deploymentService = host.Services.GetRequiredService<DeploymentService>();
     }
@@ -39,6 +41,7 @@ public class SuccessfulDummyDeploymentTest
     [Test]
     public async Task ShouldBeAbleToDeployRecipe()
     {
+        await EnsureNetworkExists("cloudcrafter");
         var nixpacksDockerBuildStep = _recipe.BuildOptions.Steps.FirstOrDefault(x =>
             x.Type == DeploymentBuildStepType.NixpacksBuildDockerImage);
 

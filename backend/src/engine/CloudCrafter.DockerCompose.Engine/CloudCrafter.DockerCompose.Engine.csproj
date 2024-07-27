@@ -37,5 +37,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CloudCrafter.DockerCompose.Shared\CloudCrafter.DockerCompose.Shared.csproj" />
+  </ItemGroup>
   
 </Project>

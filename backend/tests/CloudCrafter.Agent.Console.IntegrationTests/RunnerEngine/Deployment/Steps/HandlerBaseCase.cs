@@ -29,6 +29,10 @@ public abstract class HandlerBaseCase
          var recipe = new DeploymentRecipe
             {
                 Name = "My Application",
+                Application = new()
+                {
+                    Id = Guid.NewGuid()
+                },
                 Destination =
                     new DeploymentRecipeDestination { RootDirectory = "/tmp/cloudcrafter-testing/" + RandomGenerator.String() },
                 DockerComposeOptions =

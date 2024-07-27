@@ -9,7 +9,7 @@ public class DockerHelperTest : BaseDockerTest
     [SetUp]
     public void SetUp()
     {
-        _dockerHelper = new DockerHelper();
+        _dockerHelper = new DockerHelper(new DockerClientProvider());
     }
     
     [Test]

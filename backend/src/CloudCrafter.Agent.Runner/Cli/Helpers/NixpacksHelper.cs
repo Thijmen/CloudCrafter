@@ -1,5 +1,7 @@
+using CloudCrafter.Agent.Models.Configs;
 using CloudCrafter.Agent.Models.Deployment.Steps.Params;
 using CloudCrafter.Agent.Models.Exceptions;
+using CloudCrafter.Agent.Runner.Cli.Helpers.Abstraction;
 using Microsoft.Extensions.Logging;
 
 namespace CloudCrafter.Agent.Runner.Cli.Helpers;
@@ -43,8 +45,7 @@ public class NixpacksHelper(ICommandExecutor executor, ICommandParser parser, IL
         return parsedResult;
     }
 
-    public async Task<ExecutorResult> BuildDockerImage(string planPath, string workDir, string imageName,
-        bool disableCache)
+    public async Task<ExecutorResult> BuildDockerImage(NixpacksBuildDockerImageConfig config)
     {
         await EnsureNixpacksInstalled();
 
@@ -53,21 +54,21 @@ public class NixpacksHelper(ICommandExecutor executor, ICommandParser parser, IL
         [
             "build",
             "-c",
-            planPath,
+            config.PlanPath,
             "--no-error-without-start", // TODO: What does this mean?
             "-n",
-            imageName,
+            config.ImageName,
         ];
 
-        if (!disableCache)
+        if (!config.DisableCache)
         {
             baseCommand.Add("--no-cache");
         }
 
         baseCommand.AddRange([
-            workDir,
+            config.WorkDir,
             "-o",
-            workDir
+            config.WorkDir
         ]);
 
         var result = await executor.ExecuteAsync(NixpacksExecutable,
@@ -85,20 +86,20 @@ public class NixpacksHelper(ICommandExecutor executor, ICommandParser parser, IL
             "--network",
             "host",
             "-f",
-            $"{workDir}/.nixpacks/Dockerfile", // TODO: Add build args
+            $"{config.WorkDir}/.nixpacks/Dockerfile", // TODO: Add build args
             "--progress",
             "plain",
         ];
 
-        if (!disableCache)
+        if (!config.DisableCache)
         {
             baseDockerBuildCommand.Add("--no-cache");
         }
 
         baseDockerBuildCommand.AddRange([
             "-t",
-            imageName,
-            workDir
+            config.ImageName,
+            config.WorkDir
         ]);
 
 

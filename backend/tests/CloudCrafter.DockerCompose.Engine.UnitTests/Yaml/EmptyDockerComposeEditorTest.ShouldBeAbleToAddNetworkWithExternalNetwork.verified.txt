@@ -1,0 +1,10 @@
+﻿services:
+  test:
+    labels:
+      test: true
+    networks:
+    - cloudcrafter
+networks:
+  cloudcrafter:
+    name: cloudcrafter
+    external: true

@@ -4,6 +4,7 @@ using CloudCrafter.Agent.Models.Deployment.Steps;
 using CloudCrafter.Agent.Models.Recipe;
 using CloudCrafter.Agent.Runner.Cli;
 using CloudCrafter.Agent.Runner.Cli.Helpers;
+using CloudCrafter.Agent.Runner.Cli.Helpers.Abstraction;
 using CloudCrafter.Agent.Runner.RunnerEngine.Deployment;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -45,6 +46,7 @@ public static class ExtensionMethods
         services.AddTransient<INixpacksHelper, NixpacksHelper>()
             .AddTransient<IDockerHealthCheckHelper, DockerHealthCheckHelper>()
             .AddTransient<IDockerHelper, DockerHelper>()
+            .AddTransient<IDockerClientProvider, DockerClientProvider>()
             .AddTransient<IDockerComposeHelper, DockerComposeHelper>();
         services.AddTransient<ICommandParser, CommandParser>()
             .AddTransient<IFileSystemHelper, FileSystemHelper>();

@@ -1,8 +1,35 @@
-version: '3.8'
-
 services:
+  traefik:
+    image: "traefik:v3.1"
+    container_name: traefik
+    networks:
+      - cloudcrafter
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  
+  whoami:
+    image: "traefik/whoami"
+    container_name: "simple-service"
+    networks:
+      - cloudcrafter
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.127.0.0.1.sslip.io`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
+
   postgres:
     image: postgres:16-alpine
+    networks:
+      - cloudcrafter
     environment:
       POSTGRES_USER: cloudcrafter
       POSTGRES_PASSWORD: password
@@ -13,6 +40,8 @@ services:
       - '5432:5432'
   
   postgres-tests:
+    networks:
+      - cloudcrafter
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: cloudcrafter
@@ -24,6 +53,8 @@ services:
       - '5678:5432'
 
   test-host:
+    networks:
+      - cloudcrafter
     build:
       context: ./docker/test-host
       dockerfile: Dockerfile
@@ -34,12 +65,22 @@ services:
 
   redis:
     image: redis:alpine
+    networks:
+      - cloudcrafter
     ports:
       - '6379:6379'
   redis-tests:
+    networks:
+      - cloudcrafter
     image: redis:alpine
     ports:
       - '6380:6379'
+
+networks:
+  cloudcrafter:
+    name: cloudcrafter
+    driver: bridge
+    external: true
 volumes:
   pgdata:
     driver: local

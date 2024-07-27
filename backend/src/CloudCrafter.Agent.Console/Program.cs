@@ -1,9 +1,6 @@
 ﻿using System.CommandLine;
-using CloudCrafter.Agent.Console.Commands;
-using CloudCrafter.Agent.Models.Recipe;
 using CloudCrafter.Agent.Runner;
 using CloudCrafter.Agent.Runner.Cli;
-using CloudCrafter.Agent.Runner.Cli.Helpers;
 using CloudCrafter.Agent.Runner.Common.Behaviour;
 using CloudCrafter.Agent.Runner.DeploymentLogPump;
 using CloudCrafter.Agent.Runner.DeploymentLogPump.Implementation;
@@ -19,56 +16,27 @@ public class Program
         return await RunApp(args);
     }
 
-    public static async Task ValidateAndDeployRecipe(IHost host, DeploymentRecipe recipe)
-    {
-        var deploymentService = host.Services.GetRequiredService<DeploymentService>();
-
-        await deploymentService.ValidateRecipe(recipe);
-
-        await deploymentService.DeployAsync(recipe);
-    }
-
     public static async Task<int> RunApp(string[] args)
     {
         var host = CreateHostBuilder(args).Build();
 
         var demoOption = new Option<bool>("--demo", "Runs the dummy deployment recipe");
-
+        var fromBase64Option = new Option<string>("--from-base64", "Runs the deployment recipe from a base64 string");
+        
         var rootCommand = new RootCommand("CloudCrafter Agent");
         rootCommand.AddOption(demoOption);
 
-        int? exitCode = null;
-
-        rootCommand.SetHandler(async demoOptionValue =>
+        int? resultCode = null;
+        rootCommand.SetHandler(async (demoOptionValue, fromBase64OptionValue) =>
         {
-            var mediator = host.Services.GetRequiredService<IMediator>();
-
-            
-
-            DeploymentRecipe? recipe = null;
-            if (demoOptionValue)
-            {
-                var random = new Random();
-                var randomString = new string(Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 10)
-                    .Select(s => s[random.Next(s.Length)]).ToArray());
-
-                recipe = await mediator.Send(new GetDummyDeployment.Query("custom-image", randomString));
-            }
-
-            if (recipe == null)
-            {
-                exitCode = -1;
-                Console.WriteLine("Error: No Recipe found - cannot continue");
-                return;
-            }
-
-            await ValidateAndDeployRecipe(host, recipe);
-        }, demoOption);
+            var agentRunner = new AgentRunner(host);
+            resultCode = await agentRunner.Run(demoOptionValue, fromBase64OptionValue);
+        }, demoOption, fromBase64Option);
 
 
         var intResult = await rootCommand.InvokeAsync(args);
 
-        return exitCode ?? intResult;
+        return resultCode ?? intResult;
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args)
