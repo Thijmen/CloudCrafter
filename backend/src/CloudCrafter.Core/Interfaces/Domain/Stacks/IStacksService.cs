@@ -28,4 +28,6 @@ public interface IStacksService
     Task<StackDetailDto?> UpdateStack(UpdateStackCommand request);
 
     Task MarkStacksUnknownAfterTimespan(TimeSpan maxHealthCheckAge);
+    Task FetchAndLoadServices(Guid stackId);
+    Task DeleteStack(Guid stackId);
 }

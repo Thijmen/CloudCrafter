@@ -31,6 +31,8 @@ public class CreateStackFromSourceProviderCommand
     /// </summary>
     public required string Repository { get; set; }
 
+    public required CreateStackBuildOption BuildOption { get; set; }
+
     public required Guid EnvironmentId { get; set; }
 
     public required Guid ServerId { get; set; }
@@ -57,6 +59,7 @@ internal class CreateStackFromSourceProviderCommandHandler(IStacksService servic
                 Repository = request.Repository,
                 Path = request.Path,
             },
+            BuildOption = request.BuildOption,
         };
 
         return await service.CreateStack(args);

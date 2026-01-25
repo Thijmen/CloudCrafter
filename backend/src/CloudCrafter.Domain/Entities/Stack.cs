@@ -14,6 +14,8 @@ public class Stack : BaseAuditableEntity
     public required StackBuildPack BuildPack { get; init; }
     public ApplicationSource? Source { get; set; }
 
+    public StackDockerComposeData DockerComposeData { get; set; } = new();
+
     public List<Deployment> Deployments { get; set; } = new();
     public List<StackService> Services { get; set; } = new();
     public List<StackEnvironmentVariable> EnvironmentVariables { get; set; } = new();
@@ -25,5 +27,6 @@ public class Stack : BaseAuditableEntity
 
 public enum StackBuildPack
 {
-    Nixpacks,
+    Nixpacks = 0,
+    DockerCompose = 1,
 }

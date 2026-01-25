@@ -10,12 +10,17 @@ public class StackServiceTypeConfiguration : IEntityTypeConfiguration<StackServi
     public void Configure(EntityTypeBuilder<StackServiceType> builder)
     {
         builder.HasData(
-            new List<StackServiceType>()
+            new List<StackServiceType>
             {
-                new StackServiceType()
+                new()
                 {
                     Id = StackServiceTypeConstants.App,
                     Type = nameof(StackServiceTypeConstants.App),
+                },
+                new()
+                {
+                    Id = StackServiceTypeConstants.DatabasePostgres,
+                    Type = nameof(StackServiceTypeConstants.DatabasePostgres),
                 },
             }
         );

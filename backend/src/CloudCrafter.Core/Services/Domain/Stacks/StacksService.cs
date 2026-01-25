@@ -8,6 +8,7 @@ using CloudCrafter.Core.Events.DomainEvents;
 using CloudCrafter.Core.Interfaces.Domain.Stacks;
 using CloudCrafter.Core.Interfaces.Domain.Stacks.Filters;
 using CloudCrafter.Core.Interfaces.Domain.Users;
+using CloudCrafter.Core.Interfaces.Domain.Utils;
 using CloudCrafter.Core.Interfaces.Repositories;
 using CloudCrafter.Domain.Common;
 using CloudCrafter.Domain.Domain.Deployment;
@@ -24,7 +25,9 @@ public class StacksService(
     IServerRepository serverRepository,
     IMapper mapper,
     IUserAccessService userAccessService,
-    IUser user
+    IUser user,
+    IGitService gitService,
+    IStackServiceProvisioner stackServiceProvisioner
 ) : IStacksService
 {
     public async Task<StackCreatedDto> CreateStack(CreateStackArgsDto args)
@@ -245,6 +248,60 @@ public class StacksService(
                 }
             }
         }
+
+        await repository.SaveChangesAsync();
+    }
+
+    public async Task FetchAndLoadServices(Guid stackId)
+    {
+        var stack = await repository.GetStack(stackId);
+        if (stack == null)
+        {
+            throw new NotFoundException("Stack", "Stack not found");
+        }
+
+        await userAccessService.EnsureHasAccessToEntity(
+            stack.Environment.Project,
+            user?.Id,
+            AccessType.Write
+        );
+
+        if (stack.BuildPack != StackBuildPack.DockerCompose)
+        {
+            throw new InvalidOperationException("Stack is not a Docker Compose stack");
+        }
+
+        var (dockerComposeContent, error) = await gitService.FetchDockerComposeContent(stack);
+
+        if (error != null)
+        {
+            throw new InvalidOperationException($"Failed to fetch docker-compose content: {error}");
+        }
+
+        if (string.IsNullOrEmpty(dockerComposeContent))
+        {
+            throw new InvalidOperationException("No docker-compose content found");
+        }
+
+        await stackServiceProvisioner.ProvisionStackFromYaml(stack.Id, dockerComposeContent);
+    }
+
+    public async Task DeleteStack(Guid stackId)
+    {
+        var stack = await repository.GetStack(stackId);
+
+        if (stack == null)
+        {
+            throw new NotFoundException("Stack", "Stack not found");
+        }
+
+        await userAccessService.EnsureHasAccessToEntity(
+            stack.Environment.Project,
+            user?.Id,
+            AccessType.Write
+        );
+
+        repository.DeleteStack(stack);
 
         await repository.SaveChangesAsync();
     }

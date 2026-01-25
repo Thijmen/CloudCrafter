@@ -6,10 +6,12 @@ services:
     - "80:80"
     volumes:
     - ./php-app:/var/www/html
+    labels:
+      my.example.label: "example"
+      some.value: "true"
+      treafik.enable: "true"
     networks:
     - lampnet
-    labels:
-      treafik.enable: true
   db:
     image: mysql:5.7
     environment:

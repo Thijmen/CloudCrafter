@@ -8,7 +8,8 @@ public class StackConfiguration : IEntityTypeConfiguration<Stack>
 {
     public void Configure(EntityTypeBuilder<Stack> builder)
     {
-        builder.OwnsOne(service => service.HealthStatus);
+        builder.OwnsOne(stack => stack.HealthStatus);
+        builder.OwnsOne(stack => stack.DockerComposeData);
 
         // Configure one-to-many relationship with StackEnvironmentVariable
         builder

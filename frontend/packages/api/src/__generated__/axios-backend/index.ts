@@ -6,6 +6,7 @@ export { getDeleteEnvironmentVariableGroupUrl, deleteEnvironmentVariableGroup } 
 export { getDeleteProjectUrl, deleteProject } from './deleteProject'
 export { getDeleteProviderUrl, deleteProvider } from './deleteProvider'
 export { getDeleteServerByIdUrl, deleteServerById } from './deleteServerById'
+export { getDeleteStackUrl, deleteStack } from './deleteStack'
 export { getDeleteStackServiceVolumeUrl, deleteStackServiceVolume } from './deleteStackServiceVolume'
 export { getDeleteTeamUrl, deleteTeam } from './deleteTeam'
 export { getGetAllTeamsUrl, getAllTeams } from './getAllTeams'

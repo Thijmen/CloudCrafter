@@ -560,6 +560,11 @@ namespace CloudCrafter.Infrastructure.Data.Migrations
                         {
                             Id = new Guid("6257aa7c-09f0-42c0-8417-3d0ca0ead213"),
                             Type = "App"
+                        },
+                        new
+                        {
+                            Id = new Guid("81fc7fa9-a1ef-4ddc-b181-6f019ff0568b"),
+                            Type = "DatabasePostgres"
                         });
                 });
 
@@ -1194,6 +1199,25 @@ namespace CloudCrafter.Infrastructure.Data.Migrations
                                 .HasForeignKey("StackId");
                         });
 
+                    b.OwnsOne("CloudCrafter.Domain.Entities.StackDockerComposeData", "DockerComposeData", b1 =>
+                        {
+                            b1.Property<Guid>("StackId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("DockerComposeFile")
+                                .HasColumnType("text");
+
+                            b1.HasKey("StackId");
+
+                            b1.ToTable("Stacks");
+
+                            b1.WithOwner()
+                                .HasForeignKey("StackId");
+                        });
+
+                    b.Navigation("DockerComposeData")
+                        .IsRequired();
+
                     b.Navigation("Environment");
 
                     b.Navigation("HealthStatus")
@@ -1324,6 +1348,25 @@ namespace CloudCrafter.Infrastructure.Data.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("StackServiceId");
                         });
+
+                    b.OwnsOne("CloudCrafter.Domain.Entities.StackServiceDockerComposeData", "DockerComposeData", b1 =>
+                        {
+                            b1.Property<Guid>("StackServiceId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("ServiceName")
+                                .HasColumnType("text");
+
+                            b1.HasKey("StackServiceId");
+
+                            b1.ToTable("StackServices");
+
+                            b1.WithOwner()
+                                .HasForeignKey("StackServiceId");
+                        });
+
+                    b.Navigation("DockerComposeData")
+                        .IsRequired();
 
                     b.Navigation("HealthStatus")
                         .IsRequired();

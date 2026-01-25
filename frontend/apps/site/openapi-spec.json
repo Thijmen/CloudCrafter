@@ -1026,6 +1026,26 @@
 					}
 				}
 			},
+			"delete": {
+				"tags": ["Stacks"],
+				"operationId": "DeleteStack",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				}
+			},
 			"put": {
 				"tags": ["Stacks"],
 				"operationId": "UpdateStack",
@@ -2367,10 +2387,16 @@
 				"enum": ["Verbose", "Debug", "Information", "Warning", "Error", "Fatal"]
 			},
 			"CheckValidGitRepoCommand": {
-				"required": ["repository"],
+				"required": ["repository", "branch", "path"],
 				"type": "object",
 				"properties": {
 					"repository": {
+						"type": "string"
+					},
+					"branch": {
+						"type": "string"
+					},
+					"path": {
 						"type": "string"
 					}
 				}
@@ -2416,8 +2442,19 @@
 					}
 				}
 			},
+			"CreateStackBuildOption": {
+				"enum": ["Nixpacks", "DockerCompose"]
+			},
 			"CreateStackCommand": {
-				"required": ["name", "gitRepository", "environmentId", "serverId"],
+				"required": [
+					"name",
+					"gitRepository",
+					"gitBranch",
+					"pathInGitRepository",
+					"buildOption",
+					"environmentId",
+					"serverId"
+				],
 				"type": "object",
 				"properties": {
 					"name": {
@@ -2427,6 +2464,16 @@
 					"gitRepository": {
 						"minLength": 1,
 						"type": "string"
+					},
+					"gitBranch": {
+						"minLength": 1,
+						"type": "string"
+					},
+					"pathInGitRepository": {
+						"type": "string"
+					},
+					"buildOption": {
+						"$ref": "#/components/schemas/CreateStackBuildOption"
 					},
 					"environmentId": {
 						"type": "string",
@@ -2485,6 +2532,7 @@
 					"branch",
 					"path",
 					"repository",
+					"buildOption",
 					"environmentId",
 					"serverId"
 				],
@@ -2511,6 +2559,9 @@
 					},
 					"repository": {
 						"type": "string"
+					},
+					"buildOption": {
+						"$ref": "#/components/schemas/CreateStackBuildOption"
 					},
 					"environmentId": {
 						"type": "string",

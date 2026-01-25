@@ -9,7 +9,8 @@ namespace CloudCrafter.Core.Events.Handlers;
 public class StackCreatedEventHandler(
     ILogger<StackCreatedEventHandler> logger,
     IStackServicesService stackServicesService,
-    IStackEnvironmentVariablesService stackEnvironmentVariablesService
+    IStackEnvironmentVariablesService stackEnvironmentVariablesService,
+    IStacksService stacksService
 ) : INotificationHandler<StackCreatedEvent>
 {
     public async Task Handle(StackCreatedEvent notification, CancellationToken cancellationToken)
@@ -19,6 +20,11 @@ public class StackCreatedEventHandler(
         if (notification.Stack.BuildPack == StackBuildPack.Nixpacks)
         {
             await HandleNixpacks(notification.Stack);
+        }
+
+        if (notification.Stack.BuildPack == StackBuildPack.DockerCompose)
+        {
+            await HandleDockerCompose(notification.Stack);
         }
 
         await CreateDefaultEnvironmentVariables(notification.Stack);
@@ -34,6 +40,15 @@ public class StackCreatedEventHandler(
         logger.LogInformation("Adding default App service to stack: {StackId}", stack.Id);
 
         await stackServicesService.AddAppServiceToStack(stack.Id, "Default");
+
+        logger.LogInformation("Default App service added to stack: {StackId}", stack.Id);
+    }
+
+    private async Task HandleDockerCompose(Stack stack)
+    {
+        logger.LogInformation("Creating Docker compose services for stack: {StackId}", stack.Id);
+
+        await stacksService.FetchAndLoadServices(stack.Id);
 
         logger.LogInformation("Default App service added to stack: {StackId}", stack.Id);
     }

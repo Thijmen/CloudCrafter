@@ -115,6 +115,7 @@ public static class InfrastructureServiceExtensions
             .AddScoped<IJwtService, JwtService>()
             .AddScoped<IEmailSender, FakeEmailSender>()
             .AddScoped<IStackEnvironmentVariablesService, StackEnvironmentVariablesService>()
+            .AddScoped<IStackServiceProvisioner, StackServiceProvisioner>()
             .AddScoped<IStackServiceVolumesService, StackServiceVolumesService>();
 
         return services;

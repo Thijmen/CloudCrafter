@@ -43,6 +43,13 @@ public class StacksController : CloudCrafterController
         return details is not null ? Ok(details) : NotFound();
     }
 
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteStack([FromRoute] Guid id, ISender sender)
+    {
+        await sender.Send(new DeleteStackCommand { StackId = id });
+        return Ok();
+    }
+
     [HttpPost("{id}/deploy")]
     public async Task<ActionResult<DeploymentCreatedDetailsDto>> PostDispatchStackDeployment(
         [FromRoute] Guid id,

@@ -1,1 +1,1 @@
-{"required":["repository"],"type":"object","properties":{"repository":{"type":"string"}},"x-readme-ref-name":"CheckValidGitRepoCommand"}
+{"required":["repository","branch","path"],"type":"object","properties":{"repository":{"type":"string"},"branch":{"type":"string"},"path":{"type":"string"}},"x-readme-ref-name":"CheckValidGitRepoCommand"}

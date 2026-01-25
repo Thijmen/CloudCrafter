@@ -7,7 +7,8 @@ namespace CloudCrafter.Core.Commands.Utils;
 
 [Authorize]
 // TODO: Add Authorize
-public record CheckValidGitRepoCommand(string Repository) : IRequest<GitRepositoryCheckResultDto>;
+public record CheckValidGitRepoCommand(string Repository, string Branch, string Path)
+    : IRequest<GitRepositoryCheckResultDto>;
 
 internal class CheckValidGitRepoCommandHandler(IGitService service)
     : IRequestHandler<CheckValidGitRepoCommand, GitRepositoryCheckResultDto>
@@ -17,6 +18,6 @@ internal class CheckValidGitRepoCommandHandler(IGitService service)
         CancellationToken cancellationToken
     )
     {
-        return service.ValidateRepository(request.Repository);
+        return service.ValidateRepository(request.Repository, request.Path, request.Branch);
     }
 }

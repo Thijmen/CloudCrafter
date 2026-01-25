@@ -4,7 +4,7 @@ name: My Custom Stack 123
 application:
   id: 35223e08-9c9f-4322-972e-51c610c202e3
 dockerComposeOptions:
-  base64DockerCompose: c2VydmljZXM6CiAgbXktY3VzdG9tLXNlcnZpY2UtMTIzOgogICAgaGVhbHRoY2hlY2s6CiAgICAgIHRlc3Q6IGN1cmwgLWYgaHR0cDovLzEyNy4wLjAuMTozMDAwLwogICAgICBpbnRlcnZhbDogM3MKICAgICAgdGltZW91dDogNHMKICAgICAgcmV0cmllczogMwogICAgICBzdGFydF9wZXJpb2Q6IDNzCiAgICBsYWJlbHM6CiAgICAgIGNsb3VkY3JhZnRlci5tYW5hZ2VkOiB0cnVlCiAgICAgIGNsb3VkY3JhZnRlci5zdGFjay5pZDogMzUyMjNlMDgtOWM5Zi00MzIyLTk3MmUtNTFjNjEwYzIwMmUzCiAgICAgIGNsb3VkY3JhZnRlci5zdGFjay5zZXJ2aWNlLmlkOiBiMzRhNjU2MC03MDFkLTRmMGUtYjAyNC1iNGI3YjIxNTViY2YKICAgICAgY2xvdWRjcmFmdGVyLmRlcGxveW1lbnQ6IGZkZTg1YWE2LThkZDYtNDhjOS04YzRiLTgxNzJhMmYxNWYyOAogICAgICB0cmFlZmlrLmVuYWJsZTogdHJ1ZQogICAgICB0cmFlZmlrLmh0dHAucm91dGVycy5iMzRhNjU2MC03MDFkLTRmMGUtYjAyNC1iNGI3YjIxNTViY2YucnVsZTogSG9zdChgbXktY3VzdG9tLWRvbWFpbi5jb21gKQogICAgICB0cmFlZmlrLmh0dHAucm91dGVycy5iMzRhNjU2MC03MDFkLTRmMGUtYjAyNC1iNGI3YjIxNTViY2YuZW50cnlwb2ludHM6IHdlYgogICAgICB0cmFlZmlrLmh0dHAucm91dGVycy5iMzRhNjU2MC03MDFkLTRmMGUtYjAyNC1iNGI3YjIxNTViY2Yuc2VydmljZTogYjM0YTY1NjAtNzAxZC00ZjBlLWIwMjQtYjRiN2IyMTU1YmNmCiAgICAgIHRyYWVmaWsuaHR0cC5zZXJ2aWNlcy5iMzRhNjU2MC03MDFkLTRmMGUtYjAyNC1iNGI3YjIxNTViY2YubG9hZGJhbGFuY2VyLnNlcnZlci5wb3J0OiAtMQogICAgbmV0d29ya3M6CiAgICAtIGNsb3VkY3JhZnRlcgogICAgZW52X2ZpbGU6IC5lbnYKICAgIGltYWdlOiBiMzRhNjU2MC03MDFkLTRmMGUtYjAyNC1iNGI3YjIxNTViY2Y6bGF0ZXN0Cm5ldHdvcmtzOgogIGNsb3VkY3JhZnRlcjoKICAgIGV4dGVybmFsOiB0cnVlCg==
+  base64DockerCompose: c2VydmljZXM6CiAgbXktY3VzdG9tLXNlcnZpY2UtMTIzOgogICAgaGVhbHRoY2hlY2s6CiAgICAgIHRlc3Q6IGN1cmwgLWYgaHR0cDovLzEyNy4wLjAuMTozMDAwLwogICAgICBpbnRlcnZhbDogM3MKICAgICAgdGltZW91dDogNHMKICAgICAgcmV0cmllczogMwogICAgICBzdGFydF9wZXJpb2Q6IDNzCiAgICBsYWJlbHM6CiAgICAgIGNsb3VkY3JhZnRlci5tYW5hZ2VkOiAidHJ1ZSIKICAgICAgY2xvdWRjcmFmdGVyLnN0YWNrLmlkOiAiMzUyMjNlMDgtOWM5Zi00MzIyLTk3MmUtNTFjNjEwYzIwMmUzIgogICAgICBjbG91ZGNyYWZ0ZXIuc3RhY2suc2VydmljZS5pZDogImIzNGE2NTYwLTcwMWQtNGYwZS1iMDI0LWI0YjdiMjE1NWJjZiIKICAgICAgY2xvdWRjcmFmdGVyLmRlcGxveW1lbnQ6ICJmZGU4NWFhNi04ZGQ2LTQ4YzktOGM0Yi04MTcyYTJmMTVmMjgiCiAgICAgIHRyYWVmaWsuZW5hYmxlOiAidHJ1ZSIKICAgICAgdHJhZWZpay5odHRwLnJvdXRlcnMuYjM0YTY1NjAtNzAxZC00ZjBlLWIwMjQtYjRiN2IyMTU1YmNmLnJ1bGU6ICJIb3N0KGBteS1jdXN0b20tZG9tYWluLmNvbWApIgogICAgICB0cmFlZmlrLmh0dHAucm91dGVycy5iMzRhNjU2MC03MDFkLTRmMGUtYjAyNC1iNGI3YjIxNTViY2YuZW50cnlwb2ludHM6ICJ3ZWIiCiAgICAgIHRyYWVmaWsuaHR0cC5yb3V0ZXJzLmIzNGE2NTYwLTcwMWQtNGYwZS1iMDI0LWI0YjdiMjE1NWJjZi5zZXJ2aWNlOiAiYjM0YTY1NjAtNzAxZC00ZjBlLWIwMjQtYjRiN2IyMTU1YmNmIgogICAgICB0cmFlZmlrLmh0dHAuc2VydmljZXMuYjM0YTY1NjAtNzAxZC00ZjBlLWIwMjQtYjRiN2IyMTU1YmNmLmxvYWRiYWxhbmNlci5zZXJ2ZXIucG9ydDogIi0xIgogICAgbmV0d29ya3M6CiAgICAtIGNsb3VkY3JhZnRlcgogICAgZW52X2ZpbGU6IC5lbnYKICAgIGltYWdlOiBiMzRhNjU2MC03MDFkLTRmMGUtYjAyNC1iNGI3YjIxNTViY2Y6bGF0ZXN0Cm5ldHdvcmtzOgogIGNsb3VkY3JhZnRlcjoKICAgIGV4dGVybmFsOiB0cnVlCg==
   dockerComposeDirectory: /data/cloudcrafter/stacks/35223e08-9c9f-4322-972e-51c610c202e3
 destination:
   rootDirectory: /data/cloudcrafter/stacks/35223e08-9c9f-4322-972e-51c610c202e3
@@ -108,15 +108,15 @@ services:
       retries: 3
       start_period: 3s
     labels:
-      cloudcrafter.managed: true
-      cloudcrafter.stack.id: 35223e08-9c9f-4322-972e-51c610c202e3
-      cloudcrafter.stack.service.id: b34a6560-701d-4f0e-b024-b4b7b2155bcf
-      cloudcrafter.deployment: fde85aa6-8dd6-48c9-8c4b-8172a2f15f28
-      traefik.enable: true
-      traefik.http.routers.b34a6560-701d-4f0e-b024-b4b7b2155bcf.rule: Host(`my-custom-domain.com`)
-      traefik.http.routers.b34a6560-701d-4f0e-b024-b4b7b2155bcf.entrypoints: web
-      traefik.http.routers.b34a6560-701d-4f0e-b024-b4b7b2155bcf.service: b34a6560-701d-4f0e-b024-b4b7b2155bcf
-      traefik.http.services.b34a6560-701d-4f0e-b024-b4b7b2155bcf.loadbalancer.server.port: -1
+      cloudcrafter.managed: "true"
+      cloudcrafter.stack.id: "35223e08-9c9f-4322-972e-51c610c202e3"
+      cloudcrafter.stack.service.id: "b34a6560-701d-4f0e-b024-b4b7b2155bcf"
+      cloudcrafter.deployment: "fde85aa6-8dd6-48c9-8c4b-8172a2f15f28"
+      traefik.enable: "true"
+      traefik.http.routers.b34a6560-701d-4f0e-b024-b4b7b2155bcf.rule: "Host(`my-custom-domain.com`)"
+      traefik.http.routers.b34a6560-701d-4f0e-b024-b4b7b2155bcf.entrypoints: "web"
+      traefik.http.routers.b34a6560-701d-4f0e-b024-b4b7b2155bcf.service: "b34a6560-701d-4f0e-b024-b4b7b2155bcf"
+      traefik.http.services.b34a6560-701d-4f0e-b024-b4b7b2155bcf.loadbalancer.server.port: "-1"
     networks:
     - cloudcrafter
     env_file: .env

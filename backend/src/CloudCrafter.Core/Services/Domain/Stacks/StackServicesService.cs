@@ -4,6 +4,8 @@ using CloudCrafter.Core.Common.Interfaces;
 using CloudCrafter.Core.Interfaces.Domain.Stacks;
 using CloudCrafter.Core.Interfaces.Domain.Users;
 using CloudCrafter.Core.Interfaces.Repositories;
+using CloudCrafter.DockerCompose.Engine.Yaml;
+using CloudCrafter.Domain.Domain.Application.Services;
 using CloudCrafter.Domain.Domain.Stack;
 using CloudCrafter.Domain.Domain.User.ACL;
 using CloudCrafter.Domain.Entities;
@@ -19,7 +21,32 @@ public class StackServicesService(
 {
     public async Task AddAppServiceToStack(Guid stackId, string name)
     {
-        await stackRepository.AddAppServiceToStack(stackId, name);
+        await stackRepository.AddServiceToStack(stackId, name, StackServiceTypes.App, true);
+    }
+
+    public async Task AddOrUpdateServiceFromServiceEditor(
+        Stack stack,
+        DockerComposeEditor.ServiceEditor serviceEditor
+    )
+    {
+        var name = serviceEditor.ServiceName();
+
+        var stackService = stack.Services.FirstOrDefault(x =>
+            x.DockerComposeData.ServiceName == name
+        );
+
+        if (stackService == null)
+        {
+            // TODO: Find out type
+            stackService = await stackRepository.AddServiceToStack(
+                stack.Id,
+                name,
+                StackServiceTypes.DatabasePostgres,
+                false
+            );
+        }
+
+        stackService.DockerComposeData.ServiceName = name;
     }
 
     public async Task<StackServiceDto?> UpdateStackService(UpdateStackServiceCommand request)

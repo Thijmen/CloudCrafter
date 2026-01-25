@@ -6,6 +6,7 @@ export type { CreateProject200, CreateProjectMutationRequest, CreateProjectMutat
 export type { CreateProjectCommand } from './CreateProjectCommand'
 export type { CreateServer200, CreateServerMutationRequest, CreateServerMutationResponse, CreateServerMutation } from './CreateServer'
 export type { CreateServerCommand } from './CreateServerCommand'
+export type { CreateStackBuildOptionEnum, CreateStackBuildOption } from './CreateStackBuildOption'
 export type { CreateStackCommand } from './CreateStackCommand'
 export type { CreateStackEnvironmentVariableCommand } from './CreateStackEnvironmentVariableCommand'
 export type { CreateStackEnvironmentVariableGroupCommand } from './CreateStackEnvironmentVariableGroupCommand'
@@ -29,6 +30,7 @@ export type {
 export type { DeleteProjectPathParams, DeleteProject200, DeleteProjectMutationResponse, DeleteProjectMutation } from './DeleteProject'
 export type { DeleteProviderPathParams, DeleteProvider200, DeleteProviderMutationResponse, DeleteProviderMutation } from './DeleteProvider'
 export type { DeleteServerByIdPathParams, DeleteServerById200, DeleteServerByIdMutationResponse, DeleteServerByIdMutation } from './DeleteServerById'
+export type { DeleteStackPathParams, DeleteStack200, DeleteStackMutationResponse, DeleteStackMutation } from './DeleteStack'
 export type {
   DeleteStackServiceVolumePathParams,
   DeleteStackServiceVolume200,
@@ -284,6 +286,7 @@ export type { UpdateStackServiceCommand } from './UpdateStackServiceCommand'
 export type { UpdateStackServiceVolumeCommand } from './UpdateStackServiceVolumeCommand'
 export type { UserDto } from './UserDto'
 export { channelOutputLogLineLevelEnum } from './ChannelOutputLogLineLevel'
+export { createStackBuildOptionEnum } from './CreateStackBuildOption'
 export { deploymentStatusDtoEnum } from './DeploymentStatusDto'
 export { entityHealthDtoValueEnum } from './EntityHealthDtoValue'
 export { filterOperatorOptionEnum } from './FilterOperatorOption'

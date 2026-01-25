@@ -6,6 +6,7 @@ export type { CreateProject200, CreateProjectMutationRequest, CreateProjectMutat
 export type { CreateProjectCommand } from './types/CreateProjectCommand'
 export type { CreateServer200, CreateServerMutationRequest, CreateServerMutationResponse, CreateServerMutation } from './types/CreateServer'
 export type { CreateServerCommand } from './types/CreateServerCommand'
+export type { CreateStackBuildOptionEnum, CreateStackBuildOption } from './types/CreateStackBuildOption'
 export type { CreateStackCommand } from './types/CreateStackCommand'
 export type { CreateStackEnvironmentVariableCommand } from './types/CreateStackEnvironmentVariableCommand'
 export type { CreateStackEnvironmentVariableGroupCommand } from './types/CreateStackEnvironmentVariableGroupCommand'
@@ -29,6 +30,7 @@ export type {
 export type { DeleteProjectPathParams, DeleteProject200, DeleteProjectMutationResponse, DeleteProjectMutation } from './types/DeleteProject'
 export type { DeleteProviderPathParams, DeleteProvider200, DeleteProviderMutationResponse, DeleteProviderMutation } from './types/DeleteProvider'
 export type { DeleteServerByIdPathParams, DeleteServerById200, DeleteServerByIdMutationResponse, DeleteServerByIdMutation } from './types/DeleteServerById'
+export type { DeleteStackPathParams, DeleteStack200, DeleteStackMutationResponse, DeleteStackMutation } from './types/DeleteStack'
 export type {
   DeleteStackServiceVolumePathParams,
   DeleteStackServiceVolume200,
@@ -313,6 +315,7 @@ export { getDeleteEnvironmentVariableGroupUrl, deleteEnvironmentVariableGroup } 
 export { getDeleteProjectUrl, deleteProject } from './e2e-backend/deleteProject'
 export { getDeleteProviderUrl, deleteProvider } from './e2e-backend/deleteProvider'
 export { getDeleteServerByIdUrl, deleteServerById } from './e2e-backend/deleteServerById'
+export { getDeleteStackUrl, deleteStack } from './e2e-backend/deleteStack'
 export { getDeleteStackServiceVolumeUrl, deleteStackServiceVolume } from './e2e-backend/deleteStackServiceVolume'
 export { getDeleteTeamUrl, deleteTeam } from './e2e-backend/deleteTeam'
 export { getGetAllTeamsUrl, getAllTeams } from './e2e-backend/getAllTeams'
@@ -362,6 +365,7 @@ export { getUpdateServerUrl, updateServer } from './e2e-backend/updateServer'
 export { getUpdateStackUrl, updateStack } from './e2e-backend/updateStack'
 export { getUpdateStackServiceUrl, updateStackService } from './e2e-backend/updateStackService'
 export { channelOutputLogLineLevelEnum } from './types/ChannelOutputLogLineLevel'
+export { createStackBuildOptionEnum } from './types/CreateStackBuildOption'
 export { deploymentStatusDtoEnum } from './types/DeploymentStatusDto'
 export { entityHealthDtoValueEnum } from './types/EntityHealthDtoValue'
 export { filterOperatorOptionEnum } from './types/FilterOperatorOption'
@@ -377,6 +381,7 @@ export { createProjectCommandSchema } from './zod/createProjectCommandSchema'
 export { createProject200Schema, createProjectMutationRequestSchema, createProjectMutationResponseSchema } from './zod/createProjectSchema'
 export { createServerCommandSchema } from './zod/createServerCommandSchema'
 export { createServer200Schema, createServerMutationRequestSchema, createServerMutationResponseSchema } from './zod/createServerSchema'
+export { createStackBuildOptionSchema } from './zod/createStackBuildOptionSchema'
 export { createStackCommandSchema } from './zod/createStackCommandSchema'
 export { createStackEnvironmentVariableCommandSchema } from './zod/createStackEnvironmentVariableCommandSchema'
 export { createStackEnvironmentVariableGroupCommandSchema } from './zod/createStackEnvironmentVariableGroupCommandSchema'
@@ -398,6 +403,7 @@ export {
 export { deleteProjectPathParamsSchema, deleteProject200Schema, deleteProjectMutationResponseSchema } from './zod/deleteProjectSchema'
 export { deleteProviderPathParamsSchema, deleteProvider200Schema, deleteProviderMutationResponseSchema } from './zod/deleteProviderSchema'
 export { deleteServerByIdPathParamsSchema, deleteServerById200Schema, deleteServerByIdMutationResponseSchema } from './zod/deleteServerByIdSchema'
+export { deleteStackPathParamsSchema, deleteStack200Schema, deleteStackMutationResponseSchema } from './zod/deleteStackSchema'
 export {
   deleteStackServiceVolumePathParamsSchema,
   deleteStackServiceVolume200Schema,

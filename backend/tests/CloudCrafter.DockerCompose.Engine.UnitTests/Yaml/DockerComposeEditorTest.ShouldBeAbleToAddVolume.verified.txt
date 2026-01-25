@@ -7,6 +7,9 @@ services:
     volumes:
     - ./php-app:/var/www/html
     - ./cache:/var/www/html/cache
+    labels:
+      my.example.label: "example"
+      some.value: "true"
     networks:
     - lampnet
   db:

@@ -3,6 +3,12 @@ import type { StackDetails } from '../../../fixtures/project-fixture'
 
 export const StackDetailPage = (page: Page) => {
 	return {
+		goToStackOverview: async (stack: StackDetails) => {
+			await page.goto(
+				`/admin/projects/${stack.project.id}/${stack.project.environments[0].id}/stack/${stack.stack.id}`,
+			)
+		},
+
 		environments: {
 			button: page.getByTestId('subsection-environment-variables'),
 
@@ -91,6 +97,41 @@ export const StackDetailPage = (page: Page) => {
 
 			await expect(locators.subTab).toBeVisible()
 			await locators.subTab.click()
+		},
+
+		goToAdvancedStackTab: async () => {
+			const locators = {
+				section: page.getByTestId('general-settings'),
+				subTab: page.getByTestId('subtab-advanced'),
+			}
+
+			await expect(locators.section).toBeVisible()
+			await locators.section.click()
+
+			await expect(locators.subTab).toBeVisible()
+			await locators.subTab.click()
+		},
+
+		advanced: {
+			deleteStackButton: page.getByTestId('button-delete-stack'),
+			confirmDeleteStackButton: page.getByTestId('button-stack-delete-confirm'),
+		},
+
+		isOnProjectPage: async (stack: StackDetails): Promise<boolean> => {
+			const url = page.url()
+			return url.endsWith(
+				`/admin/projects/${stack.project.id}/${stack.project.environments[0].id}`,
+			)
+		},
+
+		waitForProjectPage: async (stack: StackDetails): Promise<void> => {
+			await page.waitForURL((url) =>
+				url
+					.toString()
+					.endsWith(
+						`/admin/projects/${stack.project.id}/${stack.project.environments[0].id}`,
+					),
+			)
 		},
 
 		url: (stack: StackDetails) =>

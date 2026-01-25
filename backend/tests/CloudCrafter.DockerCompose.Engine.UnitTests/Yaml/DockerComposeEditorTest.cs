@@ -30,6 +30,9 @@ services:
       - ""80:80""
     volumes:
       - ./php-app:/var/www/html
+    labels:
+      - ""my.example.label=example""
+      - some.value=true
     networks:
       - lampnet
   db:
@@ -91,7 +94,33 @@ networks:
     [Test]
     public async Task ShouldBeAbleToAddALabel()
     {
-        var service = _editor.Service("web")!.AddLabel("treafik.enable", "true");
+        var service = _editor.Service("web");
+
+        service.GetLabelValue("my.example.label").Should().Be("example");
+
+        service.AddLabel("treafik.enable", "true");
+
+        var yaml = _editor.GetYaml();
+
+        var isValid = await _editor.IsValid();
+
+        isValid.IsValid.Should().BeTrue();
+
+        await Verify(yaml);
+    }
+
+    [Test]
+    public async Task ShouldBeAbleToAddEnvironmentVariableToExistingService()
+    {
+        var service = _editor.Service("db");
+
+        service.AddEnvironmentVariable("MYSQL_DATABASE", "example_db");
+        service
+            .GetEnvironmentVariables()
+            .Should()
+            .HaveCount(2)
+            .And.Contain(x => x.Key == "MYSQL_ROOT_PASSWORD" && x.Value == "example")
+            .And.Contain(x => x.Key == "MYSQL_DATABASE" && x.Value == "example_db");
 
         var yaml = _editor.GetYaml();
 
@@ -105,7 +134,21 @@ networks:
     [Test]
     public async Task ShouldBeAbleToAddEnvironmentVariable()
     {
-        var service = _editor.Service("web")!.AddEnvironmentVariable("APP_ENV", "dev");
+        var service = _editor.Service("web");
+
+        service.AddEnvironmentVariable("APP_ENV", "dev");
+
+        service
+            .GetEnvironmentVariables()
+            .Should()
+            .HaveCount(1)
+            .And.Contain(x => x.Key == "APP_ENV" && x.Value == "dev");
+
+        var db = _editor.Service("db");
+        db.GetEnvironmentVariables()
+            .Should()
+            .HaveCount(1)
+            .And.Contain(x => x.Key == "MYSQL_ROOT_PASSWORD" && x.Value == "example");
 
         var yaml = _editor.GetYaml();
 
@@ -263,6 +306,22 @@ networks:
         services.Should().HaveCount(2);
         services.Should().Contain("web");
         services.Should().Contain("db");
+    }
+
+    [Test]
+    public void ShouldBeAbleToGetVolumes()
+    {
+        var webService = _editor.Service("web");
+        var dbService = _editor.Service("db");
+
+        var webVolumes = webService.GetVolumes();
+        var dbVolumes = dbService.GetVolumes();
+
+        webVolumes.Should().HaveCount(1);
+        webVolumes.Should().Contain(("./php-app", "/var/www/html", false));
+
+        dbVolumes.Should().HaveCount(1);
+        dbVolumes.Should().Contain(("db_data", "/var/lib/mysql", true));
     }
 
     [Test]

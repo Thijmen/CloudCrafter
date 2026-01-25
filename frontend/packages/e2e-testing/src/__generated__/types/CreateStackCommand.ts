@@ -1,3 +1,5 @@
+import type { CreateStackBuildOption } from './CreateStackBuildOption'
+
 export type CreateStackCommand = {
   /**
    * @minLength 3
@@ -9,6 +11,16 @@ export type CreateStackCommand = {
    * @type string
    */
   gitRepository: string
+  /**
+   * @minLength 1
+   * @type string
+   */
+  gitBranch: string
+  /**
+   * @type string
+   */
+  pathInGitRepository: string
+  buildOption: CreateStackBuildOption
   /**
    * @type string, uuid
    */

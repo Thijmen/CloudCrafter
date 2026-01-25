@@ -2,7 +2,7 @@
   service1:
     image: redis:alpine
     labels:
-      label1: value1
+      label1: "value1"
     volumes:
     - /dev-path:/dev-path
     environment:

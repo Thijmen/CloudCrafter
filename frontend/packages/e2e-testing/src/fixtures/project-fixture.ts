@@ -8,6 +8,7 @@ import {
 	deleteProject as apiDeleteProject,
 	createProject,
 	createServer,
+	createStackBuildOptionEnum,
 	createTeam,
 	deleteTeam,
 	getProjects,
@@ -124,6 +125,9 @@ export class ProjectFixture extends UserFixture {
 				name: generateStackName(),
 				gitRepository: 'https://github.com/cloudcrafter-oss/demo-examples',
 				serverId: servers[0].id,
+				gitBranch: 'main',
+				pathInGitRepository: '/',
+				buildOption: createStackBuildOptionEnum.Nixpacks,
 			},
 			client,
 		)

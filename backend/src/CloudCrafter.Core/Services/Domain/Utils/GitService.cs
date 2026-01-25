@@ -2,6 +2,7 @@
 using CloudCrafter.Core.Interfaces.Domain.Utils;
 using CloudCrafter.Core.Interfaces.Repositories;
 using CloudCrafter.Domain.Domain.Utils;
+using CloudCrafter.Domain.Entities;
 using CloudCrafter.Shared.Utils.Cli.Abstraction;
 using Microsoft.Extensions.Logging;
 
@@ -133,6 +134,91 @@ public class GitService(
             // Handle other exceptions (e.g., network issues)
             logger.LogCritical(ex, "Git repository check went wrong");
             return false;
+        }
+    }
+
+    public async Task<(string? DockerComposeContent, string? Error)> FetchDockerComposeContent(
+        Stack stack
+    )
+    {
+        if (stack.Source == null)
+        {
+            return (null, "Stack has no source configuration");
+        }
+
+        string? repository = null;
+        string? path = null;
+        string? branch = null;
+
+        if (stack.Source.Git != null)
+        {
+            repository = stack.Source.Git.Repository;
+            path = stack.Source.Git.Path;
+            branch = stack.Source.Git.Branch;
+        }
+        else if (stack.Source.GithubApp != null)
+        {
+            // TODO: Implement GitHub App repository URL construction
+            return (null, "GitHub App integration not yet implemented");
+        }
+        else
+        {
+            return (null, "Stack has no valid source configuration");
+        }
+
+        var tempDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+
+        try
+        {
+            // Clone repository with depth 1 to get just latest commit
+            var cloneArgs = new List<string> { "clone", "--depth", "1" };
+            if (!string.IsNullOrEmpty(branch))
+            {
+                cloneArgs.AddRange(["-b", branch]);
+            }
+
+            cloneArgs.AddRange([repository, tempDir]);
+
+            var cloneResult = await executor.ExecuteAsync("git", cloneArgs);
+            if (cloneResult.ExitCode != 0)
+            {
+                return (null, "Failed to clone repository");
+            }
+
+            // Determine the path to docker-compose file
+            var dockerComposePath = Path.Combine(
+                tempDir,
+                path?.TrimStart('/') ?? "",
+                "docker-compose.yml"
+            );
+
+            if (!File.Exists(dockerComposePath))
+            {
+                return (null, "docker-compose.yml not found in the specified path");
+            }
+
+            var content = await File.ReadAllTextAsync(dockerComposePath);
+            return (content, null);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error fetching docker-compose content");
+            return (null, $"Error fetching docker-compose content: {ex.Message}");
+        }
+        finally
+        {
+            // Clean up temp directory
+            if (Directory.Exists(tempDir))
+            {
+                try
+                {
+                    Directory.Delete(tempDir, true);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogWarning(ex, "Failed to clean up temporary directory");
+                }
+            }
         }
     }
 }

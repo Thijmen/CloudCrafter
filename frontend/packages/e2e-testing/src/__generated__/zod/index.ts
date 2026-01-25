@@ -6,6 +6,7 @@ export { createProjectCommandSchema } from './createProjectCommandSchema'
 export { createProject200Schema, createProjectMutationRequestSchema, createProjectMutationResponseSchema } from './createProjectSchema'
 export { createServerCommandSchema } from './createServerCommandSchema'
 export { createServer200Schema, createServerMutationRequestSchema, createServerMutationResponseSchema } from './createServerSchema'
+export { createStackBuildOptionSchema } from './createStackBuildOptionSchema'
 export { createStackCommandSchema } from './createStackCommandSchema'
 export { createStackEnvironmentVariableCommandSchema } from './createStackEnvironmentVariableCommandSchema'
 export { createStackEnvironmentVariableGroupCommandSchema } from './createStackEnvironmentVariableGroupCommandSchema'
@@ -27,6 +28,7 @@ export {
 export { deleteProjectPathParamsSchema, deleteProject200Schema, deleteProjectMutationResponseSchema } from './deleteProjectSchema'
 export { deleteProviderPathParamsSchema, deleteProvider200Schema, deleteProviderMutationResponseSchema } from './deleteProviderSchema'
 export { deleteServerByIdPathParamsSchema, deleteServerById200Schema, deleteServerByIdMutationResponseSchema } from './deleteServerByIdSchema'
+export { deleteStackPathParamsSchema, deleteStack200Schema, deleteStackMutationResponseSchema } from './deleteStackSchema'
 export {
   deleteStackServiceVolumePathParamsSchema,
   deleteStackServiceVolume200Schema,

@@ -155,6 +155,29 @@ public static class FakerInstances
 
     public static Faker<Stack> StackFaker(
         Guid environmentId,
+        PublicGitSettings settings,
+        Action<Faker<Server>>? additionalServerActions = null
+    )
+    {
+        var stack = StackFaker(environmentId, additionalServerActions);
+
+        var source = new ApplicationSource
+        {
+            Type = ApplicationSourceType.Git,
+            Git = new ApplicationSourceGit
+            {
+                Repository = settings.Repo,
+                Branch = settings.Branch,
+                Path = settings.Path,
+            },
+            GithubApp = null,
+        };
+
+        return stack.RuleFor(x => x.Source, f => source);
+    }
+
+    public static Faker<Stack> StackFaker(
+        Guid environmentId,
         Action<Faker<Server>>? additionalServerActions = null
     )
     {
@@ -172,7 +195,9 @@ public static class FakerInstances
             .RuleFor(x => x.Description, f => null)
             .RuleFor(x => x.LastModifiedBy, (Guid?)null)
             .RuleFor(x => x.Server, server)
+            // ReSharper disable once RedundantCast
             .RuleFor(x => x.Environment, f => (Environment?)null)
+            .RuleFor(x => x.DockerComposeData, f => new StackDockerComposeData())
             .RuleFor(x => x.EnvironmentId, environmentId)
             .RuleFor(x => x.Deployments, f => new List<Deployment>())
             .RuleFor(x => x.Source, f => null)
@@ -212,9 +237,10 @@ public static class FakerInstances
             .RuleFor(x => x.UpdatedAt, DateTime.UtcNow)
             .RuleFor(x => x.StackId, stack.Id)
             .RuleFor(x => x.Description, f => null)
+            .RuleFor(x => x.DockerComposeData, f => new StackServiceDockerComposeData())
             .RuleFor(x => x.HealthcheckConfiguration, f => new EntityHealthcheckConfiguration())
             .RuleFor(x => x.StackServiceTypeId, StackServiceTypeConstants.App)
-            .RuleFor(x => x.Stack, stack)
+            .RuleFor(x => x.Stack, (Stack?)null)
             .RuleFor(x => x.HttpConfiguration, (EntityHttpConfiguration?)null)
             .RuleFor(x => x.Volumes, new List<StackServiceVolume>())
             .RuleFor(x => x.CreatedBy, (Guid?)null)
@@ -229,6 +255,7 @@ public static class FakerInstances
         return new Faker<Environment>()
             .StrictMode(true)
             .RuleFor(x => x.Id, Guid.NewGuid)
+            // ReSharper disable once RedundantCast
             .RuleFor(x => x.Project, f => (Project?)null)
             .RuleFor(x => x.ProjectId, project.Id)
             .RuleFor(x => x.Name, f => $"Environment {f.Person.FirstName}")
@@ -252,4 +279,6 @@ public static class FakerInstances
             .RuleFor(x => x.LastModifiedBy, f => null)
             .RuleFor(x => x.UpdatedAt, DateTime.UtcNow);
     }
+
+    public record PublicGitSettings(string Repo, string Branch, string Path);
 }

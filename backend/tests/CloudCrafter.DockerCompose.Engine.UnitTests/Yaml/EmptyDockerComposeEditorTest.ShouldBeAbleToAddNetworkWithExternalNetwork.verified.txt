@@ -1,7 +1,7 @@
 ﻿services:
   test:
     labels:
-      test: true
+      test: "true"
     networks:
     - cloudcrafter
 networks:

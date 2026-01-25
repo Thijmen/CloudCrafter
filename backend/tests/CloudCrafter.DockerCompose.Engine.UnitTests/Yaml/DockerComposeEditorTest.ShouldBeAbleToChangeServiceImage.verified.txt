@@ -6,6 +6,9 @@ services:
     - "80:80"
     volumes:
     - ./php-app:/var/www/html
+    labels:
+      my.example.label: "example"
+      some.value: "true"
     networks:
     - lampnet
   db:

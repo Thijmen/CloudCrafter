@@ -1,3 +1,5 @@
+import type { CreateStackBuildOption } from './CreateStackBuildOption'
+
 export type CreateStackFromSourceProviderCommand = {
   /**
    * @minLength 3
@@ -26,6 +28,7 @@ export type CreateStackFromSourceProviderCommand = {
    * @type string
    */
   repository: string
+  buildOption: CreateStackBuildOption
   /**
    * @type string, uuid
    */

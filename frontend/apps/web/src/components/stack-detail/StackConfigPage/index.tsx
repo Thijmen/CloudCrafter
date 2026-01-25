@@ -7,7 +7,7 @@ import { useGetDeploymentsForStackHook } from '@cloudcrafter/api'
 import { Key, List, type LucideIcon, Server, Settings } from 'lucide-react'
 import type React from 'react'
 import { useEffect, useState } from 'react'
-import { DummyInfoTab } from '../DummyInfoTab'
+import { AdvancedSettingsTab } from '../advanced-settings/advanced-settings-tab'
 import { DeploymentList } from '../deployments/deployment-list'
 import { DockerStorage } from '../docker-storage/DockerStorage'
 import { EnvironmentVariables } from '../environment-variables/EnvironmentVariables'
@@ -38,6 +38,7 @@ const sections = [
 	{
 		id: 'general',
 		title: 'General Settings',
+		testId: 'general-settings',
 		icon: Settings,
 		subTabs: [
 			{
@@ -53,7 +54,8 @@ const sections = [
 			{
 				id: 'advanced',
 				title: 'Advanced Settings',
-				component: DummyInfoTab as React.ComponentType<BaseComponentProps>,
+				component:
+					AdvancedSettingsTab as React.ComponentType<BaseComponentProps>,
 			},
 		],
 	},
