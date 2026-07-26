@@ -29,14 +29,14 @@
 		"@types/node": "^20.10.6"
 	},
 	"peerDependencies": {
-		"next-auth": "5.0.0-beta.25",
+		"next-auth": "5.0.0-beta.32",
 		"next": "^15.2.3"
 	},
 	"dependencies": {
 		"@tanstack/react-query": "^5.49.0",
 		"axios": "^1.7.2",
 		"jwt-decode": "^4.0.0",
-		"next-auth": "5.0.0-beta.25",
+		"next-auth": "5.0.0-beta.32",
 		"zod": "^3.23.8"
 	}
 }
